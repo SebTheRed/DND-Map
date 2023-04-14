@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {BiFlag, BiExpand, } from 'react-icons/bi'
+import {BiExpand } from 'react-icons/bi'
 import {BsHexagonHalf} from 'react-icons/bs'
 
 
@@ -11,8 +11,7 @@ const buttonClick = (val) => {
 
   return(
     <div className="header-bar">
-      <div className='header-button' onClick={()=>buttonClick('flag')}><BiFlag/></div>
-      <div className='header-button' onClick={()=>buttonClick('grid')}><BsHexagonHalf /></div>
+      <div className='header-button' onClick={()=>buttonClick('flag')}><BsHexagonHalf/></div>
       <div className='header-button' onClick={()=>buttonClick('pan')}><BiExpand /></div>
     </div>
   )

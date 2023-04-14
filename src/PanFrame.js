@@ -3,7 +3,7 @@ import ImageBox from './ImageBox'
 import GridBox from './GridBox'
 import {TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch'
 
-const PanFrame = ({tileData, chosenTool}) => {
+const PanFrame = ({territoryType, tileType, setChosenIndexNum, tileData, chosenTool}) => {
 
 const [imgSize, setImgSize] = useState([0,0])
 const backgroundImageRef = useRef()
@@ -32,7 +32,7 @@ if (chosenTool == 'pan') {
       
       <div className='drag-contents'>
         {/* <GridBox imgSize={imgSize} tileData={tileData} /> */}
-        <ImageBox backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
+        <ImageBox grab={true} backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
       </div>
 
     </TransformComponent>
@@ -54,34 +54,35 @@ if (chosenTool == 'pan') {
     <TransformComponent >
       
       <div className='drag-contents'>
-        <GridBox imgSize={imgSize} tileData={tileData} funcToggle={true} />
-        <ImageBox backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
-      </div>
-
-    </TransformComponent>
-    </TransformWrapper>
-  )
-} else if (chosenTool == 'grid') {
-  return(
-  <TransformWrapper
-      initialScale={0.8}
-      initialPositionX={-300}
-      initialPositionY={-400}
-      limitToBounds={false}
-      minScale={.5}
-      doubleClickZoom={false}
-    >
-    <TransformComponent >
-      
-      <div className='drag-contents'>
-        <GridBox imgSize={imgSize} tileData={tileData} funcToggle={false} />
-        <ImageBox backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
+        <GridBox territoryType={territoryType} tileType={tileType} setChosenIndexNum={setChosenIndexNum} imgSize={imgSize} tileData={tileData} funcToggle={true} />
+        <ImageBox grab={false} backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
       </div>
 
     </TransformComponent>
     </TransformWrapper>
   )
 }
+//  else if (chosenTool == 'grid') {
+//   return(
+//   <TransformWrapper
+//       initialScale={0.8}
+//       initialPositionX={-300}
+//       initialPositionY={-400}
+//       limitToBounds={false}
+//       minScale={.5}
+//       doubleClickZoom={false}
+//     >
+//     <TransformComponent >
+      
+//       <div className='drag-contents'>
+//         <GridBox imgSize={imgSize} tileData={tileData} funcToggle={false} />
+//         <ImageBox backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
+//       </div>
+
+//     </TransformComponent>
+//     </TransformWrapper>
+//   )
+// }
   
 }
 

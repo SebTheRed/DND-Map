@@ -1,7 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react'
 import {GiSwordWound, GiShield, GiAnglerFish, GiAncientSword, GiBigWave, GiBladeBite, GiBoltShield, GiCampfire, GiChessRook} from 'react-icons/gi'
 
-const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive}) => {
+const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive, tileType, territoryType}) => {
+  const [isTileActive, setIsTileActive] = useState(false)
   const [processedData, setProcessedData] = useState({
     color: '',
     flag: '',
@@ -12,6 +13,14 @@ const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive}) => {
     description: '',
   })
   
+  useEffect(() => {
+    if(isActive == true) {
+      setIsTileActive(true)
+    } else if (isActive == false) {
+      setIsTileActive(false)
+    }
+  }, [isActive])
+
   useEffect(()=>{
     let setupDataObj = {
       color: '',
@@ -73,35 +82,10 @@ const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive}) => {
   //   updateSelectedTile(index)
   //   console.log(tileData, index)
   // }
-  
-if (processedData.selectable == false) {
-  return(
-    <div className={`tile-piece ${processedData.color}`} >
-      <div style={{
-          position: 'absolute',
-          zIndex: '10',
-          fontSize: '30px',
-          top: '25px',
-          left: '20px',
-          color: 'rgba(255,255,255,0.7)',
-        }}></div>
-    </div>
-  )
-} else if (processedData.selectable == true) {
-  if (isActive == true) {
-    <div className={`tile-piece ${processedData.color} pointer active`} onDoubleClick={onDoubleClick}>
-        <div className='tile-flag' style={{
-          position: 'absolute',
-          zIndex: '10',
-          fontSize: '40px',
-          top: '25px',
-          left: '25px',
-          color: 'rgba(255,255,255,0.9)',
-        }}>{processedData.flag}</div>
-      </div>
-  } else {
+
+  if (isTileActive == true) {
     return(
-      <div className={`tile-piece ${processedData.color} pointer`} onDoubleClick={onDoubleClick}>
+      <div className={`tile-piece ${processedData.color} pointer active`} onDoubleClick={onDoubleClick}>
         <div className='tile-flag' style={{
           position: 'absolute',
           zIndex: '10',
@@ -109,11 +93,95 @@ if (processedData.selectable == false) {
           top: '25px',
           left: '25px',
           color: 'rgba(255,255,255,0.9)',
-        }}>{processedData.flag}</div>
+        }}></div>
       </div>
     )
+} else if (isTileActive == false) {
+  if (territoryType == 'colors') {
+    if (tileType == 'stamps') {
+      return(
+        <div className={`tile-piece ${processedData.color} pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '40px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.9)',
+          }}>{processedData.flag}</div>
+        </div>
+      )
+    } else if (tileType == 'nums') {
+      return(
+        <div className={`tile-piece ${processedData.color} pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '20px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.4)',
+          }}>{index}</div>
+        </div>
+      )
+    } else if (tileType == 'empty') {
+      return(
+        <div className={`tile-piece ${processedData.color} pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '40px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.9)',
+          }}>&nbsp;</div>
+        </div>
+      )
+    } else {}
+  } else {
+    if (tileType == 'stamps') {
+      return(
+        <div className={`tile-piece pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '40px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.9)',
+          }}>{processedData.flag}</div>
+        </div>
+      )
+    } else if (tileType == 'nums') {
+      return(
+        <div className={`tile-piece pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '20px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.4)',
+          }}>{index}</div>
+        </div>
+      )
+    } else if (tileType == 'empty') {
+      return(
+        <div className={`tile-piece pointer`} onDoubleClick={onDoubleClick}>
+          <div className='tile-flag' style={{
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '40px',
+            top: '25px',
+            left: '25px',
+            color: 'rgba(255,255,255,0.9)',
+          }}>&nbsp;</div>
+        </div>
+      )
+    } else {}
   }
-    
+  
+  
 }
     
 
