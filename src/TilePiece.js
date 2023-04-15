@@ -60,13 +60,42 @@ const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive, tileTy
       }
     }
 
-    let arrayOfIcons = [ <GiSwordWound />, <GiShield />, <GiAnglerFish/>, <GiAncientSword/>, <GiBigWave/>, <GiBladeBite/>, <GiBoltShield/>, <GiCampfire/>, <GiChessRook/>]
-    arrayOfIcons.map((icon, index)=>{
-      // console.log(icon.type.name)
-      if (tileData[2] == icon.type.name) {
-        setupDataObj.flag = icon
-      }
-    })
+    switch(tileData[2]) {
+      case 'GiShield': {
+        setupDataObj.flag = <GiShield />
+    
+      } break;
+      case 'GiBladeBite': {
+        setupDataObj.flag = <GiBladeBite />
+
+      } break;
+      case 'GiCampfire': {
+        setupDataObj.flag = <GiCampfire />
+
+      } break;
+      case 'GiSwordWound': {
+        setupDataObj.flag = <GiSwordWound />
+
+      } break;
+      case 'GiAnglerFish': {
+        setupDataObj.flag = <GiAnglerFish />
+      } break;
+      case 'GiBigWave': {
+        setupDataObj.flag = <GiBigWave />
+
+      } break;
+      case 'GiBoltShield': {
+        setupDataObj.flag = <GiBoltShield />
+
+      } break;
+      case 'GiChessRook': {
+        setupDataObj.flag = <GiChessRook />
+  
+      } break;
+      case 'GiAncientSword': {
+        setupDataObj.flag = <GiAncientSword />
+      } break;
+    }
 
 
     setProcessedData(setupDataObj)

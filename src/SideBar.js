@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {GiCircleClaws,GiSwordWound, GiShield, GiAnglerFish, GiAncientSword, GiBigWave, GiBladeBite, GiBoltShield, GiCampfire, GiChessRook} from 'react-icons/gi'
+import {GiSwordWound, GiShield, GiAnglerFish, GiAncientSword, GiBigWave, GiBladeBite, GiBoltShield, GiCampfire, GiChessRook} from 'react-icons/gi'
 import {GiClick} from 'react-icons/gi'
 import {BiHash, BiColor} from 'react-icons/bi'
 import {MdHideSource, MdOutlineEmojiFlags} from 'react-icons/md'
@@ -47,43 +47,45 @@ const SideBar = ({chosenIndexNum, tileData, setTileType, setTerritoryType}) => {
     if (!tileData[chosenIndexNum][2]){
       // setupDataObj.icon = <GiCircleClaws />
     } else {
-      let arrayOfIcons = [ <GiSwordWound />, <GiShield />, <GiAnglerFish/>, <GiAncientSword/>, <GiBigWave/>, <GiBladeBite/>, <GiBoltShield/>, <GiCampfire/>, <GiChessRook/>]
-      arrayOfIcons.map((icon, index)=>{
-      // console.log(icon.type.name)
-      if (tileData[chosenIndexNum][2] == icon.type.name) {
-        setupDataObj.icon = icon
-      }
-    })
-    switch(setupDataObj.icon.type.name) {
+    switch(tileData[chosenIndexNum][2]) {
       case 'GiShield': {
+        setupDataObj.icon = <GiShield />
         setupDataObj.iconDesc = "This area is guarded by allied soldiers."
       } break;
       case 'GiBladeBite': {
+        setupDataObj.icon = <GiBladeBite />
         setupDataObj.iconDesc = "This area is under attack by monsters."
       } break;
       case 'GiCampfire': {
+        setupDataObj.icon = <GiCampfire />
         setupDataObj.iconDesc = "The party has set up camp here."
       } break;
       case 'GiSwordWound': {
+        setupDataObj.icon = <GiSwordWound />
         setupDataObj.iconDesc = "A battle is taking place in this area."
       } break;
       case 'GiAnglerFish': {
+        setupDataObj.icon = <GiAnglerFish />
         setupDataObj.iconDesc = "A massive shadow lurks deep below.."
       } break;
       case 'GiBigWave': {
+        setupDataObj.icon = <GiBigWave />
         setupDataObj.iconDesc = "This area is suffering extreme storms."
       } break;
       case 'GiBoltShield': {
+        setupDataObj.icon = <GiBoltShield />
         setupDataObj.iconDesc = "This area is guarded by allied heroes."
       } break;
       case 'GiChessRook': {
+        setupDataObj.icon = <GiChessRook />
         setupDataObj.iconDesc = "An army stands at the ready for battle."
       } break;
       case 'GiAncientSword': {
+        setupDataObj.icon = <GiAncientSword />
         setupDataObj.iconDesc = "An ancient power is said to lie here."
       } break;
-
     }
+    
     }
     setupDataObj.alliance = tileData[chosenIndexNum][1]
     setupDataObj.title = tileData[chosenIndexNum][3]
