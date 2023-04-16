@@ -169,6 +169,15 @@
   background-color: rgba(124,252,0,0.2);
 }
 
+.tile-piece.visible {
+  background-color: none;
+  background-image: radial-gradient(rgba(0,0,0,0) 30%, rgb(168, 255, 148));
+}
+.tile-piece.invisible {
+  background-color: none;
+  background-image: radial-gradient(rgba(0,0,0,0) 55%, rgba(255, 255, 255, 0.15) 80%, rgba(255,255,255,0.5));
+}
+
 .grid-box::before {
   content: "";
   width: calc(var(--s) / 2 + var(--m));

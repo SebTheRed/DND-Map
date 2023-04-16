@@ -16,7 +16,7 @@ function App() {
 const [baseURL, setBaseURL] = useState('https://sebbelio-server-ojupvy7mfq-uc.a.run.app/')
 // const [baseURL, setBaseURL] = useState('http://localhost:1396/')
 const [tileType, setTileType] = useState('stamps')
-const [territoryType, setTerritoryType] = useState('empty')
+const [territoryType, setTerritoryType] = useState('visibility')
 const [tileData, setTileData] = useState([])
 const [chosenTool, setChosenTool] = useState("flag")
 const [chosenIndexNum, setChosenIndexNum] = useState()

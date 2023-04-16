@@ -31,8 +31,6 @@ const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive, tileTy
       isParty: false,
       description: '',
     }
-    if(funcToggle == true) {setupDataObj.selectable = true} else {setupDataObj.selectable = false}
-
     switch(tileData[1]) {
       case 'rowansport': {
         setupDataObj.color = 'yellow'
@@ -167,6 +165,103 @@ const TilePiece = ({tileData, funcToggle, index, onDoubleClick, isActive, tileTy
         </div>
       )
     } else {}
+  } else if (territoryType == 'visibility') {
+    if (tileData[4] == 'TRUE') {
+      if (tileType == 'stamps') {
+        return(
+          <div className={`tile-piece visible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '40px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.9)',
+            }}>{processedData.flag}</div>
+          </div>
+        )
+      } else if (tileType == 'nums') {
+        return(
+          <div className={`tile-piece visible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '20px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.4)',
+            }}>{index}</div>
+          </div>
+        )
+      } else if (tileType == 'empty') {
+        return(
+          <div className={`tile-piece visible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '40px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.9)',
+            }}>&nbsp;</div>
+          </div>
+        )
+      } else {}
+    } else {
+      if (tileType == 'stamps') {
+        return(
+          <div className={`tile-piece invisible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '40px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.9)',
+            }}>{processedData.flag}</div>
+          </div>
+        )
+      } else if (tileType == 'nums') {
+        return(
+          <div className={`tile-piece invisible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '20px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.4)',
+            }}>{index}</div>
+          </div>
+        )
+      } else if (tileType == 'empty') {
+        return(
+          <div className={`tile-piece invisible pointer`} onDoubleClick={onDoubleClick}>
+            <div className='tile-flag' style={{
+              position: 'absolute',
+              zIndex: '10',
+              fontSize: '40px',
+              top: '25px',
+              left: '25px',
+              color: 'rgba(255,255,255,0.9)',
+            }}>&nbsp;</div>
+          </div>
+        )
+      } else {}
+    }
+
+
+
+    
+
+
+
+
+
+
+
+
+
   } else {
     if (tileType == 'stamps') {
       return(
