@@ -8,7 +8,9 @@ import {TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch'
 const PanFrame = ({territoryType, tileType, setChosenIndexNum, tileData, chosenTool}) => {
 
 const [imgSize, setImgSize] = useState([0,0])
+const [paintScale, setPaintScale] = useState(0.5)
 const backgroundImageRef = useRef()
+
 const updateImgSize = () => {
     let backWidth = backgroundImageRef.current.width
     let backHeight = backgroundImageRef.current.height
@@ -65,28 +67,12 @@ if (chosenTool == 'pan') {
   )
 } else if (chosenTool == 'paint') {
   return(
-  <TransformWrapper
-      initialScale={0.8}
-      initialPositionX={-300}
-      initialPositionY={-400}
-      limitToBounds={false}
-      minScale={.5}
-      doubleClick={{
-        disabled: true,
-      }}
-      disabled={true}
-    >
-    <TransformComponent >
+    <div className='drag-contents' style={{userSelect: 'none',cursor: 'crosshair', scale: '1', transform: `scale(${paintScale})`, transformOrigin: 'top left'}}>
+      {/* <GridBox territoryType={territoryType} tileType={tileType} setChosenIndexNum={setChosenIndexNum} imgSize={imgSize} tileData={tileData} funcToggle={true} /> */}
       
-      <div className='drag-contents'>
-        {/* <GridBox territoryType={territoryType} tileType={tileType} setChosenIndexNum={setChosenIndexNum} imgSize={imgSize} tileData={tileData} funcToggle={true} /> */}
-        
-        <ImageBox grab={false} backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
-        <CanvasComponent imgSize={imgSize} />
-      </div>
-
-    </TransformComponent>
-    </TransformWrapper>
+      <ImageBox grab={false} backgroundImageRef={backgroundImageRef} updateImgSize={updateImgSize} />
+      <CanvasComponent paintScale={paintScale} imgSize={imgSize}/>
+    </div>   
   )
 }
 
