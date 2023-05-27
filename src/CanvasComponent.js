@@ -36,12 +36,10 @@ const CanvasComponent =({imgSize, paintScale})=>{
     const unsubscribe = onSnapshot(collection(dataBase, "lines"), (snapshot) => {
       snapshot.docs.forEach((doc) => {
         const polyLine = doc.data();
-        console.log(polyLine)
         contextRef.current.strokeStyle = polyLine.color;
         contextRef.current.lineWidth = polyLine.size;
         if ('lines' in polyLine) {
           polyLine.lines.forEach(line => {
-            console.log(line)
             contextRef.current.beginPath();
             contextRef.current.moveTo(line.start.x, line.start.y);
             contextRef.current.lineTo(line.end.x, line.end.y);
