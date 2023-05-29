@@ -2,7 +2,7 @@ import {useEffect, useState, useRef} from 'react'
 import {initializeApp} from "firebase/app"
 import {getFirestore, addDoc, collection, onSnapshot} from "firebase/firestore"
 
-const CanvasComponent =({imgSize, paintScale})=>{
+const CanvasComponent =({chosenColor, chosenSize, imgSize, paintScale})=>{
   const canvasRef = useRef()
   const contextRef = useRef()
   const strokesRef = useRef({
@@ -41,8 +41,8 @@ const CanvasComponent =({imgSize, paintScale})=>{
         if ('lines' in polyLine) {
           polyLine.lines.forEach(line => {
             contextRef.current.beginPath();
-            contextRef.current.moveTo(line.start.x, line.start.y);
-            contextRef.current.lineTo(line.end.x, line.end.y);
+            contextRef.current.moveTo(line.start.x * canvasRef.current.width, line.start.y * canvasRef.current.height);
+            contextRef.current.lineTo(line.end.x * canvasRef.current.width, line.end.y * canvasRef.current.height);
             contextRef.current.stroke();
             contextRef.current.closePath();
           })
@@ -63,8 +63,8 @@ const CanvasComponent =({imgSize, paintScale})=>{
               if ('lines' in polyLine) {
                 polyLine.lines.forEach(line => {
                   contextRef.current.beginPath();
-                  contextRef.current.moveTo(line.start.x, line.start.y);
-                  contextRef.current.lineTo(line.end.x, line.end.y);
+                  contextRef.current.moveTo(line.start.x * canvasRef.current.width, line.start.y * canvasRef.current.height);
+                  contextRef.current.lineTo(line.end.x * canvasRef.current.width, line.end.y * canvasRef.current.height);
                   contextRef.current.stroke();
                   contextRef.current.closePath();
                 })
@@ -77,34 +77,62 @@ const CanvasComponent =({imgSize, paintScale})=>{
         return () => unsubscribe();
   }, [dataBase, contextRef]);
 
-  function getMousePos(evt) {
-    let rect = canvasRef.current.getBoundingClientRect();
+  // function getMousePos(evt) {
+  //   let rect = canvasRef.current.getBoundingClientRect();
+  //   return {
+  //       x: ((evt.clientX - rect.left)/paintScale)*dpi,
+  //       y: ((evt.clientY - rect.top)/paintScale)*dpi
+  //   };
+  // }
+  const getNormalizedMousePos = (e) => {
+    let rect = canvasRef.current.getBoundingClientRect()
     return {
-        x: ((evt.clientX - rect.left)/paintScale)*dpi,
-        y: ((evt.clientY - rect.top)/paintScale)*dpi
-    };
+      x: (e.clientX - rect.left) / rect.width,
+      y: (e.clientY - rect.top) / rect.height,
+    }
   }
   const startDrawing = (e) => {
     setIsDrawing(true)
-    setLastPos(getMousePos(e))
-    // console.log(getMousePos(e))
+    setLastPos(getNormalizedMousePos(e))
+    console.log(getNormalizedMousePos(e))
+    contextRef.current.strokeStyle = chosenColor
+    contextRef.current.lineWidth = chosenSize
   }
   const drawFunc = (e) => {
     if (isDrawing == false) return;
-    //draw code here
     contextRef.current.beginPath()
-    // console.log('lastPos',lastPos)
-    contextRef.current.moveTo(lastPos.x, lastPos.y)
-    let currentCoords = getMousePos(e)
-    // console.log('currentCoords',currentCoords)
-    contextRef.current.lineTo(currentCoords.x, currentCoords.y)
+    let convertedCoords = {
+      cX: lastPos.x * canvasRef.current.width,
+      cY: lastPos.y * canvasRef.current.height
+    }
+    contextRef.current.moveTo(convertedCoords.cX, convertedCoords.cY)
+    let currentPos = getNormalizedMousePos(e)
+    let endCoords = {
+      eX: currentPos.x * canvasRef.current.width,
+      eY: currentPos.y * canvasRef.current.height
+    }
+    contextRef.current.lineTo(endCoords.eX, endCoords.eY)
     contextRef.current.stroke()
     contextRef.current.closePath()
     strokesRef.current.lines.push({
       start: {x: lastPos.x, y: lastPos.y},
-      end: {x: currentCoords.x, y: currentCoords.y}
+      end: {x: getNormalizedMousePos(e).x, y: getNormalizedMousePos(e).y}
     })
-    setLastPos(getMousePos(e))
+    strokesRef.current.color = chosenColor
+    strokesRef.current.size = chosenSize
+    console.log(strokesRef.current.lines)
+    setLastPos(getNormalizedMousePos(e))
+    // contextRef.current.beginPath()
+    // contextRef.current.moveTo(lastPos.x, lastPos.y)
+    // let currentCoords = getMousePos(e)
+    // contextRef.current.lineTo(currentCoords.x, currentCoords.y)
+    // contextRef.current.stroke()
+    // contextRef.current.closePath()
+    // strokesRef.current.lines.push({
+    //   start: {x: lastPos.x, y: lastPos.y},
+    //   end: {x: currentCoords.x, y: currentCoords.y}
+    // })
+    // setLastPos(getMousePos(e))
   }
   const endDraw = async() => {
     setIsDrawing(false)
